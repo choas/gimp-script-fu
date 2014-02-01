@@ -27,7 +27,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-twab img drawable text font:name color transparent)
+(define (script-fu-twab img drawable text font:name fcolor bcolor transparent)
 
   (let* (
 	 (width (car (gimp-image-width img)))
@@ -56,17 +56,15 @@
 					; add transparent background and text layer
     (gimp-image-add-layer img layer:bg 0)
     (gimp-image-add-layer img layer:text 0)
-;    (gimp-edit-fill layer:bg TRANSPARENT-FILL)
-;    (gimp-edit-fill layer:text TRANSPARENT-FILL)
 
 					; add background
     (gimp-rect-select img bg:x bg:y bg:width bg:height REPLACE 0 0)
-    (gimp-palette-set-background color)
+    (gimp-palette-set-background bcolor)
     (gimp-edit-fill layer:bg BG-IMAGE-FILL)
     (gimp-selection-none img)
 
 					; add text
-    (gimp-context-set-foreground '(255 255 255))
+    (gimp-context-set-foreground fcolor)
     (gimp-floating-sel-anchor 
      (car (gimp-text-fontname img layer:text text:x text:y 
 			      text 0 TRUE font:size PIXELS font:name)))
@@ -98,7 +96,8 @@
 		    SF-DRAWABLE "layer" 0
 		    SF-STRING "text" ""
 		    SF-FONT "font:name" "Sans"
-		    SF-COLOR "color" '(0 0 0)
+		    SF-COLOR "color" '(255 255 255)
+		    SF-COLOR "background color" '(0 0 0)
 		    SF-TOGGLE "transparent" FALSE
 		    )
 
