@@ -28,26 +28,30 @@
 
 (define (script-fu-twab img drawable text font:name color transparent)
 
-	(set! width (car (gimp-image-width img)))
-	(set! height (car (gimp-image-height img)))
+(let* (
+       (width (car (gimp-image-width img)))
+       (height (car (gimp-image-height img)))
 
-	(set! font:size (/ height 45))
+	(font:size (/ height 45))
 
-	(set! bg:width width)
-	(set! bg:height (* font:size 1.6))
-	(set! bg:x 0)
-	(set! bg:y (- height bg:height))
+	(bg:width width)
+	(bg:height (* font:size 1.6))
+	(bg:x 0)
+	(bg:y (- height bg:height))
 
-	(set! text:x font:size)
-	(set! text:y (- height (* font:size 1.5)))
+	(text:x font:size)
+	(text:y (- height (* font:size 1.5)))
 
-	(set! layer:bg (car (gimp-layer-new img width height RGBA-IMAGE "background-layer" 
+	(layer:bg (car (gimp-layer-new img width height RGBA-IMAGE "background-layer" 
 		(if 
 			(= transparent TRUE) 
 			50 
 			100) 
 		NORMAL-MODE)))
-	(set! layer:text (car (gimp-layer-new img width height RGBA-IMAGE "text-layer" 100 NORMAL-MODE)))
+	(layer:text (car (gimp-layer-new img width height RGBA-IMAGE "text-layer" 100 NORMAL-MODE)))
+
+
+)
 
 	(gimp-image-undo-disable img)
 
@@ -76,19 +80,20 @@
 
 	(gimp-displays-flush)
 )
+)
 
 (script-fu-register "script-fu-twab"
   "<Image>/Script-Fu/Text with Background"
   "Text with Background"
   "Lars Gregori gimp/at/beidfarbig/de"
   "Lars Gregori"
-  "2006-05-16"
+  "2014-02-01"
   "RGB*"
-  SF-IMAGE "Image" 0
-  SF-DRAWABLE "Layer" 0
-  SF-STRING "Text" ""
+  SF-IMAGE "image" 0
+  SF-DRAWABLE "layer" 0
+  SF-STRING "text" ""
   SF-FONT "font:name" "Sans"
-  SF-COLOR "Farbe" '(0 0 0)
-  SF-TOGGLE "Transparent" FALSE
+  SF-COLOR "color" '(0 0 0)
+  SF-TOGGLE "transparent" FALSE
 )
 
