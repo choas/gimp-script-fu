@@ -26,6 +26,7 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+
 (define (script-fu-twab img drawable text font:name color transparent)
 
   (let* (
@@ -43,23 +44,20 @@
 	 (text:y (- height (* font:size 1.5)))
 
 	 (layer:bg (car (gimp-layer-new img width height RGBA-IMAGE "background-layer" 
-					(if 
-					 (= transparent TRUE) 
-					 50 
-					 100) 
+					(opacity transparent) 
 					NORMAL-MODE)))
 	 (layer:text (car (gimp-layer-new img width height RGBA-IMAGE "text-layer" 100 NORMAL-MODE)))
 
 
 	 )
 
-    (gimp-image-undo-disable img)
+;    (gimp-image-undo-disable img)
 
 					; add transparent background and text layer
     (gimp-image-add-layer img layer:bg 0)
     (gimp-image-add-layer img layer:text 0)
-    (gimp-edit-fill layer:bg TRANSPARENT-FILL)
-    (gimp-edit-fill layer:text TRANSPARENT-FILL)
+;    (gimp-edit-fill layer:bg TRANSPARENT-FILL)
+;    (gimp-edit-fill layer:text TRANSPARENT-FILL)
 
 					; add background
     (gimp-rect-select img bg:x bg:y bg:width bg:height REPLACE 0 0)
@@ -76,11 +74,18 @@
 					; flatten image (save wouldn't ask to export image)
     (gimp-image-flatten img)
 
-    (gimp-image-undo-enable img)
+;    (gimp-image-undo-enable img)
 
     (gimp-displays-flush)
     )
   )
+
+(define (opacity transparent)
+(if 
+					 (= transparent TRUE) 
+					 50 
+					 100) )
+
 
 (script-fu-register "script-fu-twab"
 		    "<Image>/Script-Fu/Text with Background"
