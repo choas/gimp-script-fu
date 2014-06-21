@@ -39,7 +39,7 @@
 					(opacity transparent) 
 					NORMAL-MODE)))
 	 (layer:text (car (gimp-layer-new img width height RGBA-IMAGE "text-layer" 100 NORMAL-MODE)))
-	)
+	 )
 
 ; add transparent background and text layer
     (gimp-image-add-layer img layer:bg 0)
@@ -61,13 +61,13 @@
     (if text2-not-empty
 	(gimp-floating-sel-anchor 
 	 (car (gimp-text-fontname img layer:text text:x text:y2 
-			      text2 0 TRUE font:size PIXELS font:name))))
+				  text2 0 TRUE font:size PIXELS font:name))))
 
 ; flatten image (save wouldn't ask to export image)
     (gimp-image-flatten img)
 
     (gimp-displays-flush)
-))
+    ))
 
 
 (define (opacity transparent)
