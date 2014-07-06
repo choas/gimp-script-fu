@@ -19,13 +19,13 @@
 	 (width (car (gimp-image-width img)))
 	 (height (car (gimp-image-height img)))
 
-	 (font:size (/ height 45))
+	 (font:size (/ height 42))
 
 	 (text2-not-empty (> (string-length text2) 0))
-	 (hfactor (if text2-not-empty 2.0 1.0))
+	 (hfactor (if text2-not-empty 2.1 1.0))
 
 	 (bg:width width)
-	 (bg:height (* font:size 1.6 hfactor))
+	 (bg:height (* font:size 2.0 hfactor))
 	 (bg:x 0)
 	 (bg:y (- height bg:height))
 
@@ -88,7 +88,7 @@
 		    SF-STRING "text" ""
 		    SF-STRING "text2" ""
 		    SF-FONT "font:name" "Sans"
-		    SF-COLOR "font:color" '(255 255 255)
-		    SF-COLOR "background color" '(0 0 0)
+		    SF-COLOR "font:color" '(0 0 0)
+		    SF-COLOR "background color" '(255 255 255)
 		    SF-TOGGLE "transparent" FALSE
 		    )
