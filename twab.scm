@@ -46,7 +46,7 @@
     (gimp-image-add-layer img layer:text 0)
 
 ; add background
-    (gimp-rect-select img bg:x bg:y bg:width (* bg:height hfactor) REPLACE 0 0)
+    (gimp-rect-select img bg:x (+ bg:y 1) bg:width (+ (* bg:height hfactor) 1) REPLACE 0 0)
     (gimp-palette-set-background bcolor)
     (gimp-edit-fill layer:bg BG-IMAGE-FILL)
     (gimp-selection-none img)
@@ -85,7 +85,7 @@
 		    "RGB*"
 		    SF-IMAGE "image" 0
 		    SF-DRAWABLE "layer" 0
-		    SF-STRING "text" ""
+		    SF-STRING "text" "TTTTTTT"
 		    SF-STRING "text2" ""
 		    SF-FONT "font:name" "Sans"
 		    SF-COLOR "font:color" '(0 0 0)
