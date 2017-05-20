@@ -13,13 +13,17 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-twab img drawable text text2 font:name fcolor bcolor transparent)
+(define (script-fu-twab img drawable text text2 font:name fontsize fontsizeauto fcolor bcolor transparent)
 
   (let* (
+         (margin-bottom 3)
 	 (width (car (gimp-image-width img)))
 	 (height (car (gimp-image-height img)))
 
-	 (font:size (/ height 42))
+	 (font:size 
+             (if (= fontsizeauto TRUE)
+                 (/ height 42) 
+                 fontsize))
 
 	 (text2-not-empty (> (string-length text2) 0))
 	 (hfactor (if text2-not-empty 2.1 1.0))
@@ -27,13 +31,13 @@
 	 (bg:width width)
 	 (bg:height (* font:size 2.0 hfactor))
 	 (bg:x 0)
-	 (bg:y (- height bg:height))
+	 (bg:y (- height bg:height margin-bottom))
 
 	 (text:height font:size)
 	 (text:x text:height)
 
-	 (text:y (- height (* text:height 1.5 hfactor)))
-	 (text:y2 (- height (* text:height 1.5)))
+	 (text:y (- height (* text:height 1.5 hfactor) margin-bottom))
+	 (text:y2 (- height (* text:height 1.5) margin-bottom))
 
 	 (layer:bg (car (gimp-layer-new img width height RGBA-IMAGE "background-layer" 
 					(opacity transparent) 
@@ -46,7 +50,7 @@
     (gimp-image-add-layer img layer:text 0)
 
 ; add background
-    (gimp-rect-select img bg:x (+ bg:y 1) bg:width (+ (* bg:height hfactor) 1) REPLACE 0 0)
+    (gimp-rect-select img bg:x bg:y bg:width bg:height REPLACE 0 0)
     (gimp-palette-set-background bcolor)
     (gimp-edit-fill layer:bg BG-IMAGE-FILL)
     (gimp-selection-none img)
@@ -85,10 +89,12 @@
 		    "RGB*"
 		    SF-IMAGE "image" 0
 		    SF-DRAWABLE "layer" 0
-		    SF-STRING "text" "TTTTTTT"
-		    SF-STRING "text2" ""
-		    SF-FONT "font:name" "Sans"
-		    SF-COLOR "font:color" '(0 0 0)
-		    SF-COLOR "background color" '(255 255 255)
-		    SF-TOGGLE "transparent" FALSE
+		    SF-STRING "Text 1" ""
+		    SF-STRING "Text 2" ""
+		    SF-FONT "Font Name" "Sans"
+                    SF-ADJUSTMENT "Font Size" '(15 1 1000 1 10 0 1)
+		    SF-TOGGLE "Font Size automatisch" TRUE
+		    SF-COLOR "Font Color" '(0 0 0)
+		    SF-COLOR "Background Color" '(255 255 255)
+		    SF-TOGGLE "Transparent" FALSE
 		    )
